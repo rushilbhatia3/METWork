@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MET Catalogue Maker</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body class="wallpage">
+  <main class="wall">
+    <div id="status" class="status status--floating" aria-live="polite"></div>
+    <div id="grid" class="grid grid--masonry" aria-live="polite"></div>
+  </main>
+
+  <footer class="islandWrap">
+    <div class="island">
+      <div class="brandRow">
+        <div class="brand">Catalogue Maker</div>
+        <a class="lablink" href="./lab.html" title="Open MET API Lab">Labs</a>
+      </div>
+
+      <form id="searchForm" class="controls">
+        <input
+          id="keywordsInput"
+          type="text"
+          placeholder="Enter keywords (comma-separated). Add artists after | (optional)…"
+          autocomplete="off"
+        />
+        <button id="searchBtn" type="submit">Generate</button>
+        <button id="printBtn" type="button" title="Print catalogue">Print</button>
+      </form>
+
+      <div class="hint">
+        Example: <span class="mono">flower, armor, ukiyo-e | hokusai, monet</span>
+      </div>
+    </div>
+  </footer>
+
+  <template id="cardTpl">
+    <article class="card" draggable="true">
+      <div class="imgwrap">
+        <img class="artimg" alt="" loading="lazy" />
+      </div>
+
+      <div class="meta">
+        <div class="title"></div>
+        <div class="sub"></div>
+
+        <div class="actions">
+          <button class="btn swapBtn" type="button">Swap</button>
+          <button class="btn removeBtn" type="button">Remove</button>
+        </div>
+      </div>
+
+      <div class="chip"></div>
+    </article>
+  </template>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

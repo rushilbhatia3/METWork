@@ -1,0 +1,418 @@
+:root{
+  --bg:#ffffff;
+  --panel:#ffffff;
+  --ink:#111111;
+  --muted:#555555;
+  --line:#e6e6e6;
+  --soft:#f6f6f6;
+  --radius:18px;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  letter-spacing:0.2px;
+}
+
+/* ===== Pinterest-like wall layout ===== */
+.wallpage{
+  overflow-x:hidden;
+}
+
+.wall{
+  width:100%;
+  padding:18px 18px 140px; /* leave room for the floating island */
+  max-width:1400px;
+  margin:0 auto;
+}
+
+/* status floats lightly over the wall */
+.status{
+  font-size:12px;
+  color:var(--muted);
+  min-height:16px;
+}
+
+.status--floating{
+  position:sticky;
+  top:14px;
+  z-index:5;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 10px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:rgba(255,255,255,.86);
+  backdrop-filter: blur(10px);
+  margin-bottom:14px;
+}
+
+/* Masonry using CSS columns (simple + fast) */
+.grid--masonry{
+  column-count: 5;
+  column-gap: 14px;
+}
+
+@media (max-width: 1200px){
+  .grid--masonry{ column-count: 4; }
+}
+@media (max-width: 980px){
+  .grid--masonry{ column-count: 3; }
+}
+@media (max-width: 700px){
+  .grid--masonry{ column-count: 2; }
+}
+@media (max-width: 460px){
+  .grid--masonry{ column-count: 1; }
+}
+
+/* cards become “tiles” */
+.card{
+  display:inline-block;
+  width:100%;
+  margin:0 0 14px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  background:#fff;
+  user-select:none;
+  cursor:grab;
+  break-inside:avoid;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+}
+
+.card:active{cursor:grabbing}
+.card.dragging{opacity:.55}
+.card.drop-target{outline:2px dashed #bdbdbd; outline-offset:3px}
+
+/* Image must ALWAYS be fully visible */
+.imgwrap{
+  background:var(--soft);
+  padding:10px;
+}
+
+.artimg{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:contain;
+  border-radius:12px;
+  max-height:420px; /* “normal size” cap so tall portraits don’t dominate */
+}
+
+/* Meta stays elegant, but doesn’t overpower the wall */
+.meta{
+  padding:12px 12px 10px;
+}
+
+.title{
+  font-weight:650;
+  font-size:13px;
+  line-height:1.25;
+}
+
+.sub{
+  margin-top:6px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.35;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+.btn{
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+  cursor:pointer;
+  font-weight:600;
+}
+
+.btn:hover{ background:var(--soft); }
+.btn:active{ transform: translateY(1px); }
+
+.chip{
+  border-top:1px solid var(--line);
+  padding:10px 12px;
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--muted);
+  background:#fff;
+}
+
+/* ===== Bottom floating island controls ===== */
+.islandWrap{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:14px;
+  z-index:20;
+  display:flex;
+  justify-content:center;
+  pointer-events:none; /* so wall scroll feels natural */
+  padding:0 14px;
+}
+
+.island{
+  pointer-events:auto;
+  width:min(980px, 100%);
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:rgba(255,255,255,.88);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.10);
+  padding:14px;
+}
+
+.brandRow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+}
+
+.brand{
+  font-weight:700;
+  letter-spacing:.2px;
+}
+
+.controls{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:0;
+}
+
+.controls input{
+  flex:1;
+  min-width: 220px;
+  padding:12px 12px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+  outline:none;
+}
+
+.controls input:focus{
+  border-color:#bdbdbd;
+}
+
+.controls button{
+  padding:12px 14px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+  cursor:pointer;
+  font-weight:700;
+}
+
+.controls button:hover{ background:var(--soft); }
+.controls button:active{ transform: translateY(1px); }
+
+.lablink{
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+  text-decoration:none;
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+}
+.lablink:hover{background:var(--soft)}
+
+.hint{
+  margin-top:10px;
+  font-size:12px;
+  color:var(--muted);
+}
+.mono{ font-family: var(--mono); }
+
+/* Responsive: stack island buttons on small screens */
+@media (max-width: 620px){
+  .controls{
+    flex-wrap:wrap;
+  }
+  .controls input{
+    flex-basis:100%;
+  }
+}
+
+/* Keep your existing lab + picker styles below this point */
+/* --- LAB ONLY (metapi-lab.html) --- */
+body.lab .brand{
+  font-family: var(--mono);
+  font-weight:700;
+}
+
+.labtoggle{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:10px 12px;
+  background:#fff;
+  user-select:none;
+  cursor:pointer;
+  font-weight:600;
+}
+.labtoggle input{accent-color:#111}
+
+.raw{
+  margin-top:10px;
+  border-top:1px solid var(--line);
+  padding-top:10px;
+}
+.raw summary{
+  cursor:pointer;
+  color:var(--muted);
+  font-size:12px;
+}
+.rawpre{
+  margin:10px 0 0;
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--soft);
+  overflow:auto;
+  font-family:var(--mono);
+  font-size:11px;
+  line-height:1.4;
+  color:#111;
+}
+
+/* Debug overlay: only appears in lab-debug mode */
+.dbg{
+  display:none;
+  position:absolute;
+  top:10px;
+  left:10px;
+  padding:6px 9px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.92);
+  font-family:var(--mono);
+  font-size:11px;
+  color:#111;
+}
+
+body.lab.lab-debug .dbg{
+  display:inline-flex;
+}
+body.lab .card{position:relative}
+
+.card.is-loading { pointer-events:none; }
+.card.is-loading .artimg { filter: grayscale(1); }
+
+/* Picker overlay (unchanged) */
+.pickerOverlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  z-index: 9999;
+}
+
+.pickerPanel{
+  width: min(1100px, 100%);
+  max-height: min(86vh, 900px);
+  background: #fff;
+  border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+}
+
+.pickerHeader{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 12px;
+  border-bottom: 1px solid #000;
+}
+
+.pickerTitle{
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+
+.pickerMeta{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #000;
+}
+
+.pickerStatus{
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.pickerGrid{
+  padding: 12px;
+  overflow: auto;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 900px){
+  .pickerGrid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.pickerCell{
+  border: 1px solid #000;
+  background: #fff;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.pickerCell:hover{ background:#f5f5f5; }
+
+.pickerImg{
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid #000;
+}
+
+.pickerCaption{ padding: 8px 8px; }
+.pickerCapTitle{ font-size: 12px; line-height: 1.25; }
+.pickerCapSub{ font-size: 11px; opacity: 0.7; margin-top: 4px; }
+
+/* Print: hide island + keep wall printable */
+@media print{
+  body{background:#fff;color:#111}
+  .islandWrap, .actions, .lablink, .hint, .status--floating {display:none !important}
+  .wall{padding:0}
+  .grid--masonry{ column-count: 3; column-gap: 10px; }
+  .card{ break-inside:avoid; border:1px solid #ddd; border-radius:0 }
+  .imgwrap{ padding:8px; }
+  .artimg{ max-height:260px; border-radius:0; }
+}

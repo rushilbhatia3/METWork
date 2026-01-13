@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MET API Lab</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body class="lab">
+  <header class="topbar">
+    <div class="brand">MET API Lab</div>
+
+    <form id="labForm" class="search">
+      <input id="labInput" type="text" placeholder="Type a keyword… (e.g., flower, armor, ukiyo-e)" autocomplete="off" />
+      <button type="submit">Fetch</button>
+      <button id="labClearBtn" type="button">Clear</button>
+      <label class="labtoggle" title="Debug overlay only affects the lab page">
+        <input id="debugToggle" type="checkbox" checked />
+        <span>Debug</span>
+      </label>
+      <a class="lablink" href="./index.html" title="Back to catalogue">Catalogue</a>
+    </form>
+  </header>
+
+  <main>
+    <section class="catalogue">
+      <div id="labStatus" class="status"></div>
+      <div id="labGrid" class="grid" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <template id="labCardTpl">
+    <article class="card">
+      <div class="imgwrap">
+        <img class="artimg" alt="" loading="lazy" />
+      </div>
+
+      <div class="meta">
+        <div class="title"></div>
+        <div class="sub"></div>
+
+        <details class="raw">
+          <summary>Raw object data</summary>
+          <pre class="rawpre"></pre>
+        </details>
+      </div>
+
+      <div class="chip"></div>
+
+      <div class="dbg">
+        <span class="dbgtag"></span>
+      </div>
+    </article>
+  </template>
+
+  <script type="module" src="./js/metapi-lab.js"></script>
+</body>
+</html>
