@@ -1,8 +1,8 @@
 :root{
-  --bg:#ffffff;
+  --bg:#eee9e9;
   --panel:#ffffff;
-  --ink:#111111;
-  --muted:#555555;
+  --ink:#1a1a1a;
+  --muted:#454545;
   --line:#e6e6e6;
   --soft:#f6f6f6;
   --radius:18px;
@@ -159,7 +159,7 @@ body{
   position:fixed;
   left:0;
   right:0;
-  bottom:14px;
+  bottom:18px;
   z-index:20;
   display:flex;
   justify-content:center;
@@ -172,9 +172,9 @@ body{
   width:min(980px, 100%);
   border:1px solid var(--line);
   border-radius:22px;
-  background:rgba(255,255,255,.88);
+  background:rgba(255,255,255,.58);
   backdrop-filter: blur(12px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.10);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
   padding:14px;
 }
 
@@ -415,4 +415,17 @@ body.lab .card{position:relative}
   .card{ break-inside:avoid; border:1px solid #ddd; border-radius:0 }
   .imgwrap{ padding:8px; }
   .artimg{ max-height:260px; border-radius:0; }
+}
+
+
+.catalogue{
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:var(--panel);
+  padding:32px;
+
+  /* subtle lift */
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.04),
+    0 8px 24px rgba(0,0,0,0.06);
 }
